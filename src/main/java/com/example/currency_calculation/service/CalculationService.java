@@ -12,8 +12,6 @@ import com.example.currency_calculation.repository.CalculationRepository;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -58,7 +56,7 @@ public class CalculationService {
         return rate;
     }
 
-    public ResponseEntity<?> getRate(String exCurrency, Double price, Double discount) {
+    public Double postRate(String exCurrency, Double price, Double discount) {
 
         currency = exCurrency;
 
@@ -68,15 +66,19 @@ public class CalculationService {
         rate = getExrate(exCurrency, target);
 
         Double result = null;
-        if (exCurrency != "TWD") {
+
+        if (exCurrency.equals("TWD")) {
+            result = price * rate - discount;
+        } else {
             discount = 0.0;
+            result = price * rate;
         }
-        result = price * rate;
 
         Timestamp recordTime = Timestamp.from(ZonedDateTime.now().toInstant());
-        Calculation calculation = new Calculation(currency, rate, price, discount, result, recordTime);
+        Calculation calculation = new Calculation(exCurrency, rate, price, discount, result, recordTime);
         calculationRepository.save(calculation);
 
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return result;
     }
+
 }
