@@ -10,11 +10,8 @@ import java.util.stream.Collectors;
 import com.example.currency_calculation.model.Calculation;
 import com.example.currency_calculation.repository.CalculationRepository;
 
-import org.hibernate.annotations.Where;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -59,7 +56,7 @@ public class CalculationService {
         return rate;
     }
 
-    public ResponseEntity<?> getRate(String exCurrency, Double price, Double discount) {
+    public Double postRate(String exCurrency, Double price, Double discount) {
 
         currency = exCurrency;
 
@@ -72,7 +69,6 @@ public class CalculationService {
 
         if (exCurrency.equals("TWD")) {
             result = price * rate - discount;
-            System.out.println(discount);
         } else {
             discount = 0.0;
             result = price * rate;
@@ -82,11 +78,7 @@ public class CalculationService {
         Calculation calculation = new Calculation(exCurrency, rate, price, discount, result, recordTime);
         calculationRepository.save(calculation);
 
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return result;
     }
 
-    public Double postResult(String exCurrency, Double price, Double discount) {
-        // calculationRepository.findAll(Where)
-        return rate;
-    }
 }
