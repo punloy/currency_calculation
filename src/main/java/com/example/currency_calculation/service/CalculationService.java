@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import com.example.currency_calculation.model.Calculation;
 import com.example.currency_calculation.repository.CalculationRepository;
 
+import org.hibernate.annotations.Where;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -68,15 +69,24 @@ public class CalculationService {
         rate = getExrate(exCurrency, target);
 
         Double result = null;
-        if (exCurrency != "TWD") {
+
+        if (exCurrency.equals("TWD")) {
+            result = price * rate - discount;
+            System.out.println(discount);
+        } else {
             discount = 0.0;
+            result = price * rate;
         }
-        result = price * rate;
 
         Timestamp recordTime = Timestamp.from(ZonedDateTime.now().toInstant());
-        Calculation calculation = new Calculation(currency, rate, price, discount, result, recordTime);
+        Calculation calculation = new Calculation(exCurrency, rate, price, discount, result, recordTime);
         calculationRepository.save(calculation);
 
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    public Double postResult(String exCurrency, Double price, Double discount) {
+        // calculationRepository.findAll(Where)
+        return rate;
     }
 }
