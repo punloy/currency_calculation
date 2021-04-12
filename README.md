@@ -1,6 +1,7 @@
 # currency_calculation
 
 This is a backend server for currency_calculation
+[Note](https://hackmd.io/@bRHJttRVQ5mW1RuEFVlpoA/Sy-5TJRHO)
 
 ## Develop environment
 - Java version:16
