@@ -21,7 +21,8 @@ public class calculationController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<?> getRate() {
-        return this.calculationService.getRate();
+    public ResponseEntity<?> getRate(@RequestParam(value = "currency", defaultValue = "USD") String currency,
+            @RequestParam(value = "price") Double price, @RequestParam(value = "discount") Double discount) {
+        return this.calculationService.getRate(currency, price, discount);
     }
 }

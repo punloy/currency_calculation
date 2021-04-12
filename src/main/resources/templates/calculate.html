@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+</head>
+
+<body>
+    <h2>美金轉換器</h2>
+    <!--POST occur, redirct to /calculate-->
+    <form method="post" action="#" th:action="@{/result}" object="${calculate}">
+        <select name="currency">
+            <option value="USD">美金</option>
+            <option value="TWD">台幣</option>
+            <option value="JPY">日幣</option>
+        </select>
+
+        金額：<input type="text" name="price" th:field="*{price}" /> - 折扣：<input type="text" name="discount"
+            th:field="*{discount}" /> = 結果<b th:text="${calculation.result}"></b>
+        <br />
+        <br />
+        <input type="submit" value="計算" />
+    </form>
+</body>
+
+</html>
