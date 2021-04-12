@@ -14,6 +14,7 @@ import javax.persistence.Table;
 public class Calculation {
 
     @Id
+    @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -34,4 +35,69 @@ public class Calculation {
 
     @Column(name = "record_time", columnDefinition = "TIMESTAMP with time zone DEFAULT ('now'::test)::TIMESTAMP with time zone ")
     private Timestamp recordTime;
+
+    public Calculation(String currency, Double rate, Double price, Double discount, Double result,
+            Timestamp recordTime) {
+        this.currency = currency;
+        this.rate = rate;
+        this.price = price;
+        this.discount = discount;
+        this.result = result;
+        this.recordTime = recordTime;
+    }
+
+    public Calculation() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public Double getRate() {
+        return rate;
+    }
+
+    public void setRate(Double rate) {
+        this.rate = rate;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
+
+    public Double getResult() {
+        return result;
+    }
+
+    public void setResult(Double result) {
+        this.result = result;
+    }
+
+    public Timestamp getRecordTime() {
+        return recordTime;
+    }
+
+    public void setRecordTime(Timestamp recordTime) {
+        this.recordTime = recordTime;
+    }
 }
