@@ -21,8 +21,9 @@ public class calculationController {
     }
 
     @PostMapping("/post")
-    public Double postRate(@RequestParam(value = "currency", defaultValue = "USD") String currency,
+    public String postResult(@RequestParam(value = "currency", defaultValue = "USD") String currency,
             @RequestParam(value = "price") Double price, @RequestParam(value = "discount") Double discount) {
-        return this.calculationService.postRate(currency, price, discount);
+        String message = this.calculationService.postResult(currency, price, discount);
+        return String.format("%s", message);
     }
 }
