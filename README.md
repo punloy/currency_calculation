@@ -29,5 +29,20 @@ CREATE TABLE "calculate_record" (
 ```bash= 
 $ mvnw spring-boot:run
 ```
+### Health Check
+http://localhost:8080/api/v2/health
+### E2E Test
+Please using tool like Postman
+```cUrl=
+curl -X POST \
+  'http://localhost:8080/api/v2/post?currency=TWD&price=100&discount=50' \
+  -H 'cache-control: no-cache' \
 
-### Show result
+curl -X POST \
+  'http://localhost:8080/api/v2/post?currency=JPY&price=-30&discount=0' \
+  -H 'cache-control: no-cache' \
+
+curl -X POST \
+  'http://localhost:8080/api/v2/post?currency=TWD&price=30&discount=-2' \
+  -H 'cache-control: no-cache' \
+```

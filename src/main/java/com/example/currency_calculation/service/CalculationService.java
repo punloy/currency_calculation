@@ -56,7 +56,7 @@ public class CalculationService {
         return rate;
     }
 
-    public Double postRate(String exCurrency, Double price, Double discount) {
+    public String postResult(String exCurrency, Double price, Double discount) {
 
         currency = exCurrency;
 
@@ -64,6 +64,22 @@ public class CalculationService {
         String target = getCurl(url);
 
         rate = getExrate(exCurrency, target);
+
+        String message;
+        if (rate.equals(null)) {
+            message = "Please Input the correct currency.";
+            return message;
+        }
+
+        if (price < 0) {
+            message = "Please Input the correct price.";
+            return message;
+        }
+
+        if (discount < 0) {
+            message = "Please Input the correct discount.";
+            return message;
+        }
 
         Double result = null;
 
@@ -78,7 +94,8 @@ public class CalculationService {
         Calculation calculation = new Calculation(exCurrency, rate, price, discount, result, recordTime);
         calculationRepository.save(calculation);
 
-        return result;
+        message = "金額：" + result.toString();
+        return message;
     }
 
 }
